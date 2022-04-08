@@ -17,7 +17,9 @@ export default function UpdateProfile() {
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match")
     }
-
+    if (passwordRef.current.value.length<6){
+      return setError("Password must be minimum 6 characters")
+  }
     const promises = []
     setLoading(true)
     setError("")
@@ -48,13 +50,14 @@ export default function UpdateProfile() {
           <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+            <Form.Group id="email" >
+              
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 ref={emailRef}
                 required
-                defaultValue={currentUser.email}
+                defaultValue={currentUser.email} disabled
               />
             </Form.Group>
             <Form.Group id="password">
@@ -73,7 +76,8 @@ export default function UpdateProfile() {
                 placeholder="Leave blank to keep the same"
               />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <br></br>
+            <Button style={{backgroundColor: "#AF9C67", color: "white", borderColor:"transparent"}} disabled={loading} className="w-100" type="submit">
               Update
             </Button>
           </Form>

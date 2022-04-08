@@ -11,7 +11,7 @@ import UpdateProfile from "./UpdateProfile";
 
 function App() {
   return (<Container className="d-flex align-items-center justify-content-center"
-  style={{minHeight: "100vh"}}><div className="w-100" style={{ maxWidth: "400px" }}>
+  style={{minHeight: "100vh", backgroundColor:'grey'}}><div className="w-100" style={{ maxWidth: "400px" , backgroundColor:'grey'}}>
     <Router>
       
     <AuthProvider>

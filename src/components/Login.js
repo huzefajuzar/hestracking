@@ -42,13 +42,13 @@ export default function Login() {
                     <Form.Group id="password"><Form.Label>Password</Form.Label>
                         <Form.Control type="password" ref={passwordRef} required /></Form.Group>
                     <br></br>
-                    <Button disabled={loading} className="w-100" type="submit">Log In</Button>
+                    <Button style={{backgroundColor: "#AF9C67", color: "white", borderColor:"transparent"}}  disabled={loading} className="w-100" type="submit">Log In</Button>
                 </Form>
                 <div className="w-100 text-center mt-3">
             <Link to="/resetpass">Forgot Password?</Link>
           </div>
             </Card.Body></Card><div className="w-100 text-center mt-2">
-                Need an account? <Link to="/signup">Sign Up</Link>
+               <strong> Need an account? <Link to="/signup">Sign Up</Link></strong>
             </div></>
     )
 }

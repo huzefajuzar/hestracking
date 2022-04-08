@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 
 export default function Signup() {
+    
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
@@ -60,7 +61,8 @@ export default function Signup() {
         setLoading(false)
     }
     return (
-        <><Card>
+        <>
+        <Card >
             <Card.Body><h2 className='text-ceter mb-4'>
 
                 Sign Up
@@ -77,18 +79,27 @@ export default function Signup() {
                         <Form.Group id="name"><Form.Label>Name</Form.Label>
                         <Form.Control type="text" ref={nameRef} required /></Form.Group>
                         Office
-                        <DropdownButton
+                        <style type="text/css">
+        </style>
+<DropdownButton
       
+      variant="secondary"
+      menuVariant="dark"
+      className="mt-2"
       title={office}
       
       onSelect={handleSelect}
         >
+         
               <Dropdown.Item eventKey="A1">A1</Dropdown.Item>
               <Dropdown.Item eventKey="B2">B2</Dropdown.Item>
               <Dropdown.Item eventKey="C3">C3</Dropdown.Item>
               
         </DropdownButton> <br></br>
-                    <Button disabled={loading} className="w-100" type="submit">Sign Up</Button>
+                    <Button disabled={loading}
+                     style={{backgroundColor: "#AF9C67", color: "white", borderColor:"transparent"}} 
+                     className="w-100" 
+                     type="submit">Sign Up</Button>
                 </Form>
             </Card.Body></Card><div className="w-100 text-center mt-2">
                 Already have an account? <Link to="/login">Log In</Link>

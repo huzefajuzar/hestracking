@@ -2,7 +2,7 @@ import React, { useState,useRef, useEffect } from "react"
 import { Card, Button, Alert, Dropdown, DropdownButton,Form} from "react-bootstrap"
 import { useAuth } from "../context/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
-import { collection, query, where, getDocs, onSnapshot,doc} from "firebase/firestore";
+import {  onSnapshot,doc, setDoc, collection,addDoc} from "firebase/firestore";
 import db from "../firebase"
 
 
@@ -12,7 +12,7 @@ export default function Dashboard() {
   
   const [error, setError] = useState("")
   
-  const { currentUser, logout,userid} = useAuth()
+  const {  logout,userid} = useAuth()
   const history = useNavigate()
   const descriptionRef=useRef()
   
@@ -29,7 +29,7 @@ export default function Dashboard() {
     }
   }
   const [value,setValue]=useState('Choose a Category')
-  
+  const [message,setMessage]=useState("")
   const [colors, setColors]=useState("")
   console.log(colors)
   useEffect(
@@ -56,8 +56,15 @@ export default function Dashboard() {
 
     try {
         setError("")
+        setMessage("")
         setLoading(true)
-        console.log(userid())
+        const newDoc = await addDoc(collection(db,"ticket"),{
+          user:userid(),
+          ticket:descriptionRef.current.value,
+          category:value
+        })
+        console.log("Document written with ID: ", newDoc.id);
+        setMessage("Ticket Submitted Successfully")
         history('/')
     } catch(error) {
         alert("Error : ", error)
@@ -76,11 +83,13 @@ export default function Dashboard() {
           <strong>Name:</strong> {colors.name}<br></br>
           <strong>Office #:</strong> {colors.office}<br></br>
 
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          <Link to="/update-profile" className="btn btn-primary w-100 mt-3" style={{backgroundColor: "#AF9C67", color: "white", borderColor:"transparent"}} >
             Update Profile
           </Link>
         </Card.Body>
       </Card>
+      <br></br>
+      <br></br>
       <Card><h2 className="text-center mb-4">Create a Ticket</h2>
       <Card.Body>
        
@@ -88,7 +97,10 @@ export default function Dashboard() {
         <strong>Category</strong> <DropdownButton
       
       title={value}
-      
+      id="dropdown-button-dark-example2"
+      variant="secondary"
+      menuVariant="dark"
+      className="mt-2"
       onSelect={handleSelect}
         >
               <Dropdown.Item eventKey="Electrical">Electrical</Dropdown.Item>
@@ -101,9 +113,9 @@ export default function Dashboard() {
                 
                     
                     
-                        <Button disabled={loading} className="w-100" type="submit">Create Ticket</Button></Form></Card.Body></Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
+                        <Button style={{backgroundColor: "#AF9C67", color: "white", borderColor:"transparent"}}  disabled={loading} className="w-100" type="submit">Create Ticket</Button><strong>{message}</strong></Form></Card.Body></Card>
+      <div className="w-100 text-center mt-2"><br></br>
+        <Button className="w-100" style={{backgroundColor: "#000000", color: "white", borderColor:"transparent"}} onClick={handleLogout}>
           Log Out
         </Button>
       </div>
